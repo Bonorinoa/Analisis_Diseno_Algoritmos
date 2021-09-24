@@ -1,4 +1,3 @@
-package assignment1;
 /**
  * 
  * @author Augusto Gonzalez Bonorino <br><br>
@@ -64,3 +63,4 @@ public class StackGonzalezBonorino {
 	} // pop
 
 } // Stack
+
