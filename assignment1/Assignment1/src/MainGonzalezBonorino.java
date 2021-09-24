@@ -26,7 +26,7 @@ public class MainGonzalezBonorino {
 		
 		File theMagicFile = null;
 		
-		String fileName = null;
+		String fileName = "magicitems.txt";
 		String tempString = null;
 		
 		String [] myMagicList = new String[666];
@@ -39,8 +39,6 @@ public class MainGonzalezBonorino {
 		
 		try
 		{
-			System.out.print("Enter the name of the file: ");
-			fileName = keyboard.next();
 			
 			theMagicFile = new File(fileName);
 			
