@@ -5,7 +5,7 @@ import java.io.*;
  * @author Augusto Gonzalez Bonorino <br>
  * 
  * assignment1GonzalezBonorino <br>
- * Due Date and Time: 09/24/21 before 9:00 a.m. <br><br>
+ * Due Date and Time: 09/24/21 <br><br>
  *
  * Purpose: Develop program that leverages a singly linked list, stacks and queues to find palindromes. <br><br>
  *			
