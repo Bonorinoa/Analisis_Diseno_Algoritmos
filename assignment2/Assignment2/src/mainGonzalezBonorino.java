@@ -1,0 +1,105 @@
+import java.util.*;
+import java.io.*;
+/**
+ * 
+ * @author Augusto Gonzalez Bonorino <br>
+ * 
+ * assignment1GonzalezBonorino <br>
+ * Due Date and Time: 10/08/21 <br><br>
+ *
+ * Purpose: Test out various sorting algorithms on a given text document. <br><br>
+ *			
+ * Input: A text file containing the words or sentences to sort.
+ * 		  
+ * Output: <br><br>
+ *		   
+ *
+ * Certification of Authenticity: <br>
+ * 
+ * I certify that this assignment is entirely my own work. <br>
+ */
+public class mainGonzalezBonorino {
+	
+	static Scanner keyboard = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		File theMagicFile = null;
+		
+		String fileName = "magicitems.txt";
+		String tempString = null;
+		final int FLENGTH = 666;
+		
+		String [] myMagicList = new String[FLENGTH];
+		int numItems = 0;
+		
+		String ans = "\nSome suggestions: \n"
+				+ "\n* Check that the name of the file was typed correctly"
+				+ "\n* Make sure that you are not missing any information in your item description in the file"
+				+ "\n* Make sure you are not entering more or less items than specified";
+		
+		try
+		{
+			
+			theMagicFile = new File(fileName);
+			
+			Scanner input = new Scanner(theMagicFile);
+			
+			while(input.hasNextLine()) {
+				
+				tempString = input.nextLine();
+				System.out.println(tempString);
+				myMagicList[numItems] = tempString;
+				
+				numItems++;
+				
+			} //while 
+			
+			input.close();
+			
+		} //try
+		
+		catch(IndexOutOfBoundsException ex)
+	    {
+			System.out.println("Oops, something went wrong!");
+			System.out.println("It seems that the program has reached an index out of bounds.");
+			
+	    } // catch index out of bound
+		
+		catch (NullPointerException ex2)
+		{
+			System.out.println("The program encountered a null value.");
+			System.out.println(ans);
+			
+		} // catch null pointer
+	      
+		catch (IllegalArgumentException ex3)
+		{
+			System.out.println("An illegal argument has been given to the program.");
+			System.out.println("\nSome suggestions: \n"
+			+ "\n* Check that the name of the file was typed correctly"
+			+ "\n* Make sure that you are not missing any information in your item description in the file");
+			
+		} // catch illegal argument
+		
+		catch (IOException ex4)
+		{
+			System.out.println("There seems to be an issue with the input given or with the file that you are trying to open.");
+			System.out.println(ans);
+			
+		} // catch IOException
+		
+		catch (NoSuchElementException ex5)
+		{
+			System.out.println("\nAn element was not found.");
+			System.out.println("Make sure you are not inputting less items than specified in the first line of the text file,\n"
+					+ "or that the name of the item inputted does not contain a whitespace. \nWe apologize for the inconvenience, we are constantly working to improve our systems.");
+			
+		} // catch no such element
+		
+		
+		
+		
+	} // main
+
+} // MainGonzalezBonorino
