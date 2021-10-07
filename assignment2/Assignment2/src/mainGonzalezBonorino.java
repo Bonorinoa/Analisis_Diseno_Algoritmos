@@ -4,7 +4,7 @@ import java.io.*;
  * 
  * @author Augusto Gonzalez Bonorino <br>
  * 
- * assignment1GonzalezBonorino <br>
+ * assignment2GonzalezBonorino <br>
  * Due Date and Time: 10/08/21 <br><br>
  *
  * Purpose: Test out various sorting algorithms on a given text document. <br><br>
@@ -48,7 +48,7 @@ public class mainGonzalezBonorino {
 			while(input.hasNextLine()) {
 				
 				tempString = input.nextLine();
-				System.out.println(tempString);
+
 				myMagicList[numItems] = tempString;
 				
 				numItems++;
@@ -97,9 +97,92 @@ public class mainGonzalezBonorino {
 			
 		} // catch no such element
 		
+		// Selection sort
 		
+		System.out.println(selectionSort(myMagicList));
 		
+		// shuffle myMagicList
+		knuthShuffle(myMagicList);
+		
+		for(int i = 0; i < myMagicList.length; i++)
+			System.out.println(myMagicList[i]);
+		
+		// Insertion sort
+
+		System.out.println(insertionSort(myMagicList));
 		
 	} // main
+	
+	public static int selectionSort(String[] magicList) {
+		
+		int len = magicList.length;
+		int numComparisons = 0;
+		
+		for (int i = 0; i < len - 1; i++) {
+			
+			int smallPos = i;
+			
+			for (int j = 0; j < len; j++) {
+				
+				if (magicList[i].compareTo(magicList[smallPos]) < 0 ) //compare strings
+					smallPos = j;
+				
+				numComparisons++;
+						
+			} // inner for loop
+			
+			magicList[i] = magicList[smallPos];
+			
+		} // outer for loop
+		
+		return numComparisons;
+		
+	} // selectionSort
+	
+	
+	public static int insertionSort(String[] magicList) {
+		
+		int len = magicList.length;
+		int numComparisons = 0;
+		
+		for (int j = 1; j < len - 1; j++) {
+			
+			String key = magicList[j];
+			int i = j - 1;
+			
+			while (i >= 0 && magicList[i].compareTo(key) > 0) {
+				
+				magicList[i + 1] = magicList[i];
+				i = i - 1;
+				
+				numComparisons++;
+				
+			} // while loop
+			
+			magicList[i + 1] = key;
+			
+		} // for loop
+		
+		return numComparisons;
+		
+	} // insertionSort
+	
+	public static void knuthShuffle(String[] listToShuffle) {
+		
+		for (int i = 0; i < listToShuffle.length; i++) {
+		
+			// generate random index
+			int idx = (int) Math.random() * (i + 1);
+			
+			// swap
+			String temp = listToShuffle[idx];
+			listToShuffle[idx] = listToShuffle[i];
+			listToShuffle[i] = temp;
+			
+		} // for loop
+
+		
+	} // Knuth shuffle
+	
 
 } // MainGonzalezBonorino
