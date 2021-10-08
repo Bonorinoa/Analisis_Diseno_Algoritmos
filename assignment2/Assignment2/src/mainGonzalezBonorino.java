@@ -100,17 +100,18 @@ public class mainGonzalezBonorino {
 		// Selection sort
 		
 		System.out.println(selectionSort(myMagicList));
+
 		
 		// shuffle myMagicList
 		knuthShuffle(myMagicList);
-		
-		for(int i = 0; i < myMagicList.length; i++)
-			System.out.println(myMagicList[i]);
+
 		
 		// Insertion sort
 
 		System.out.println(insertionSort(myMagicList));
 		
+		for(int i = 0; i < myMagicList.length; i++)
+			System.out.println(myMagicList[i]);
 	} // main
 	
 	public static int selectionSort(String[] magicList) {
@@ -122,16 +123,20 @@ public class mainGonzalezBonorino {
 			
 			int smallPos = i;
 			
-			for (int j = 0; j < len; j++) {
+			for (int j = i + 1; j <= len - 1; j++) {
 				
-				if (magicList[i].compareTo(magicList[smallPos]) < 0 ) //compare strings
+				if (magicList[j].compareToIgnoreCase(magicList[smallPos]) < 0 ) //compare strings
+				{	
 					smallPos = j;
-				
+				}
 				numComparisons++;
 						
 			} // inner for loop
 			
-			magicList[i] = magicList[smallPos];
+			// swap
+			String temp = magicList[smallPos];
+			magicList[smallPos] = magicList[i];
+			magicList[i] = temp;
 			
 		} // outer for loop
 		
@@ -145,12 +150,12 @@ public class mainGonzalezBonorino {
 		int len = magicList.length;
 		int numComparisons = 0;
 		
-		for (int j = 1; j < len - 1; j++) {
+		for (int j = 1; j <= len - 2; j++) {
 			
 			String key = magicList[j];
 			int i = j - 1;
 			
-			while (i >= 0 && magicList[i].compareTo(key) > 0) {
+			while ( (i >= 0) && ( magicList[i].compareToIgnoreCase(key) > 0) ) {
 				
 				magicList[i + 1] = magicList[i];
 				i = i - 1;
@@ -172,7 +177,7 @@ public class mainGonzalezBonorino {
 		for (int i = 0; i < listToShuffle.length; i++) {
 		
 			// generate random index
-			int idx = (int) Math.random() * (i + 1);
+			int idx = (int) (Math.random() * (i + 1));
 			
 			// swap
 			String temp = listToShuffle[idx];

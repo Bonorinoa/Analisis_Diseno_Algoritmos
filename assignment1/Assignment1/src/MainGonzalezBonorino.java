@@ -30,6 +30,7 @@ public class MainGonzalezBonorino {
 		String tempString = null;
 		
 		String [] myMagicList = new String[666];
+		
 		int numItems = 0;
 		
 		String ans = "\nSome suggestions: \n"
