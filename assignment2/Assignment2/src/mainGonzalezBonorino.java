@@ -106,24 +106,15 @@ public class mainGonzalezBonorino {
 		System.out.println(selectionSort(myMagicList));
 
 		
-		// shuffle myMagicList
-		//knuthShuffle(myMagicList);
-
-		
 		// Insertion sort
 
 		System.out.println(insertionSort(myMagicList));
 		
 		
-		// shuffle myMagicList
-		//knuthShuffle(myMagicList);
-		
 		// Merge Sort
 		
 		System.out.println(mergeSort(myMagicList, 0));
-		
-		// shuffle myMagicList
-		//knuthShuffle(myMagicList);
+
 		
 		// Quick Sort
 		
