@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 /**
  * 
  * @author Augusto Gonzalez Bonorino <br>
@@ -101,6 +102,47 @@ public class MainGonzalezBonorino {
 		// Quick Sort
 		
 		System.out.println(sort.quickSort(myMagicList, 0, myMagicList.length - 1));
+		
+		// Select 42 random items for sorted myMagicList
+		// Add random items to temporary array of strings
+		
+		Random rand = new Random();
+		String [] tempMagicList = new String[42];
+		
+		// loop to generate 42 random numbers to randomly index myMagicList
+		
+		for (int i = 0; i < tempMagicList.length; i++)
+		{ 
+			
+			int idx = rand.nextInt(42);
+			
+			tempString = myMagicList[idx];
+			
+			tempMagicList[i] = tempString;
+			
+			
+		} // for loop
+		
+		// double check that elements in tempMagicList are random
+		
+		for (int j = 0; j < tempMagicList.length; j++)
+		{
+			System.out.println(tempMagicList[j]);
+			
+		} // for loop
+		
+		// Linear Search
+		
+		LinearSearchGonzalezBonorino linearSearch = new LinearSearchGonzalezBonorino();
+		
+		// use linear search to look for each of the 42 random items
+		
+		for (int k = 0; k < tempMagicList.length; k++)
+		{
+			
+			System.out.println("Comparisons made to find element "+ tempMagicList[k] + ": " + linearSearch.linearSearch(myMagicList, tempMagicList[k]));
+			
+		}
 	
 	} // main
 	
