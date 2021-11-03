@@ -23,15 +23,22 @@ public class MainGonzalezBonorino {
 	
 	static Scanner keyboard = new Scanner(System.in);
 	
+	private static final String FILE_NAME = "magicitems.txt";
+	private static final int FILE_LEN = 666;
+	
+	static int linearSearchComparisons = 0;
+	static int binarySearchComparisons = 0;
+
+	
 	public static void main(String[] args) {
 		
 		File theMagicFile = null;
 		QuickSortGonzalezBonorino sort = new QuickSortGonzalezBonorino();
 		
-		String fileName = "magicitems.txt";
 		String tempString = null;
+		int[] hashValues = new int[FILE_LEN];
 		
-		String [] myMagicList = new String[666];
+		String [] myMagicList = new String[FILE_LEN];
 		
 		int numItems = 0;
 		
@@ -43,7 +50,7 @@ public class MainGonzalezBonorino {
 		try
 		{
 			
-			theMagicFile = new File(fileName);
+			theMagicFile = new File(FILE_NAME);
 			
 			Scanner input = new Scanner(theMagicFile);
 			
@@ -114,7 +121,7 @@ public class MainGonzalezBonorino {
 		for (int i = 0; i < tempMagicList.length; i++)
 		{ 
 			
-			int idx = rand.nextInt(42);
+			int idx = rand.nextInt(FILE_LEN);
 			
 			tempString = myMagicList[idx];
 			
@@ -133,17 +140,206 @@ public class MainGonzalezBonorino {
 		
 		// Linear Search
 		
-		LinearSearchGonzalezBonorino linearSearch = new LinearSearchGonzalezBonorino();
+		//LinearSearchGonzalezBonorino linearSearch = new LinearSearchGonzalezBonorino();
 		
-		// use linear search to look for each of the 42 random items
+		// use linear search to look for each of the 42 random items and print comparisons
+		
+
+		int avgComparisonsLS = 0;
+		
+		System.out.println("LINEAR SEARCH");
+		System.out.println("*********************************************");
+		System.out.println(" ");
 		
 		for (int k = 0; k < tempMagicList.length; k++)
 		{
 			
-			System.out.println("Comparisons made to find element "+ tempMagicList[k] + ": " + linearSearch.linearSearch(myMagicList, tempMagicList[k]));
+			System.out.println("Comparisons made with linear search to find element "+ tempMagicList[k] + ": " + linearSearch(myMagicList, tempMagicList[k]));
 			
-		}
+			avgComparisonsLS += linearSearch(myMagicList, tempMagicList[k]);
+			
+			
+		} // for loop
+		
+		// Compute and print average number of comparisons for LS
+		
+		avgComparisonsLS /= tempMagicList.length;
+		
+		System.out.println(" ");
+		
+		System.out.println("Average Comparisons for Linear Search: " + avgComparisonsLS);
+		
+		System.out.println(" ");
+		
+		
+		
+		// Binary Search
+		
+		//BinarySearchGonzalezBonorino binarySearch = new BinarySearchGonzalezBonorino();
+		
+		// use binary search to look for each of the 42 random items and print comparisons
+		
+		int avgComparisonsBS = 0;
+		
+		System.out.println("BINARY SEARCH");
+		System.out.println("****************************************************");
+		System.out.println(" ");
+		
+		for (int k = 0; k < tempMagicList.length; k++)
+		{
+			// System.out.println("Search string: " + tempMagicList[k] + ", found at index: " + binarySearch(myMagicList, 0, tempMagicList.length - 1, tempMagicList[k]));
+			
+			System.out.println("Comparisons made with binary search to find element "+ tempMagicList[k] + ": " + binarySearch(myMagicList, tempMagicList[k]));
+			
+			avgComparisonsBS += binarySearch(myMagicList, tempMagicList[k]);
+			
+			
+		} // for loop
+		
+		// Compute and print average number of comparisons for BS
+		
+		avgComparisonsBS /= tempMagicList.length;
+	
+		System.out.println(" ");
+		
+		System.out.println("Average Comparisons for Binary Search: " + avgComparisonsBS);
+		
+		System.out.println(" ");
+		
+
+		// Hashing
+		
+        System.out.println("HASH TABLE");
+        System.out.println("*************************************************");
+        System.out.println(" ");
+		
+        
+        
+        HashTableGonzalezBonorino hash = new HashTableGonzalezBonorino();
+       
+        /*
+     // Print the array and hash values.
+        int hashCode = 0;
+        for (int i = 0; i < HASH_TABLE_SIZE; i++) {
+           System.out.print(i);
+           System.out.print(". " + myMagicList[i] + " - ");
+           hashCode = hash.makeHashCode(myMagicList[i]);
+           System.out.format("%03d%n", hashCode);
+           hashValues[i] = hashCode;
+        }
+        */
+        
+        for (int h = 0; h < myMagicList.length; h++)
+        {
+        	hash.insert(myMagicList[h]);
+        }
+        
+        hash.printHashTable();
+        
+        System.out.println(hash.get(4));
+        
+        /*
+         * How do I find an element in hash table
+         * 
+        for (int d = 0; d < tempMagicList.length; d++)
+        {
+        	int hashComparisons = 0;
+        	int hashCode = hash.makeHashCode(tempMagicList[d]);
+        	
+        	hashComparisons = hash[] 
+        	
+        }
+        */
+        
+		// retrieve from hash table
+		
+		// int avgHashComparisonsLS = 0;
+		
+		// get values from hash table
+
 	
 	} // main
 	
-} //MainGonzalezBonorino
+
+public static int linearSearch(String[] arr, String key){ 
+	
+	int idx = 0;
+	
+	for(int i=0;i<arr.length;i++)
+	{
+		linearSearchComparisons++;
+        if(arr[i].compareToIgnoreCase(key) == 0)
+        {    
+            return i;    
+        }    
+    }    
+    return linearSearchComparisons;
+    
+} // linearSearch
+
+
+public static int binarySearch(String[] arr, String key)
+{
+    int start = 0;
+    int mid = 0;
+    int stop = arr.length - 1;
+    int pos = 0;
+    int idx = -1;;
+    int comps = 0;
+    
+    while (start <= stop && idx == -1)
+    {
+    	binarySearchComparisons++;
+    	
+    	comps++;
+    	
+    	mid = start + (stop - start) / 2;
+    	
+    	pos = key.compareToIgnoreCase(arr[mid]);
+    	
+    	if (pos == 0)
+    		idx = mid;
+    	
+    	if (pos > 0)
+    		start = mid + 1;
+    	
+    	else
+    		
+    		stop = mid - 1;
+    	
+    } // while
+	
+	
+    return comps;
+}
+
+private static final int HASH_TABLE_SIZE = 250;
+
+public static int makeHashCode(String key) {
+	 
+	key = key.toUpperCase();
+    int length = key.length();
+    int letterTotal = 0;
+
+    // Iterate over all letters in the string, totalling their ASCII values.
+    
+    for (int i = 0; i < length; i++) 
+    {	
+       char thisLetter = key.charAt(i);
+       int thisValue = (int)thisLetter;
+       letterTotal = letterTotal + thisValue;
+       
+    } // for loop
+
+    // Scale letterTotal to fit in HASH_TABLE_SIZE.
+    int hashCode = (letterTotal * 1) % HASH_TABLE_SIZE;  // % is the "mod" operator
+    
+    // TODO: Experiment with letterTotal * 2, 3, 5, 50, etc.
+
+    return hashCode;
+    
+ 	} // makeHashCode
+	
+} // MainGonzalezBonorino
+
+	
