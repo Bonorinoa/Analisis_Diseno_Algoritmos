@@ -20,7 +20,7 @@ public class QuickSortGonzalezBonorino {
 		
 	} // Knuth shuffle
 
-	public static int quickSort(String[] magicList, int lowIndex, int highIndex) {
+	public int quickSort(String[] magicList, int lowIndex, int highIndex) {
 			
 			knuthShuffle(magicList);
 			if (lowIndex < highIndex) {

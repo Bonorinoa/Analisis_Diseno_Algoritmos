@@ -28,6 +28,7 @@ public class MainGonzalezBonorino {
 	
 	static int linearSearchComparisons = 0;
 	static int binarySearchComparisons = 0;
+    static int avgHashComps = 0;
 
 	
 	public static void main(String[] args) {
@@ -36,8 +37,7 @@ public class MainGonzalezBonorino {
 		QuickSortGonzalezBonorino sort = new QuickSortGonzalezBonorino();
 		
 		String tempString = null;
-		int[] hashValues = new int[FILE_LEN];
-		
+
 		String [] myMagicList = new String[FILE_LEN];
 		
 		int numItems = 0;
@@ -217,45 +217,32 @@ public class MainGonzalezBonorino {
         
         HashTableGonzalezBonorino hash = new HashTableGonzalezBonorino();
        
-        /*
-     // Print the array and hash values.
-        int hashCode = 0;
-        for (int i = 0; i < HASH_TABLE_SIZE; i++) {
-           System.out.print(i);
-           System.out.print(". " + myMagicList[i] + " - ");
-           hashCode = hash.makeHashCode(myMagicList[i]);
-           System.out.format("%03d%n", hashCode);
-           hashValues[i] = hashCode;
-        }
-        */
+     
         
         for (int h = 0; h < myMagicList.length; h++)
         {
-        	hash.insert(myMagicList[h]);
+        	hash.put(myMagicList[h], myMagicList[h]);
         }
         
-        hash.printHashTable();
-        
-        System.out.println(hash.get(4));
-        
-        /*
-         * How do I find an element in hash table
-         * 
-        for (int d = 0; d < tempMagicList.length; d++)
+        for (int a = 0; a < tempMagicList.length; a++)
         {
-        	int hashComparisons = 0;
-        	int hashCode = hash.makeHashCode(tempMagicList[d]);
+        	int localComps = 0;
+        	int globalComps = 0;
         	
-        	hashComparisons = hash[] 
+        	System.out.println("Looking for: " + hash.get(tempMagicList[a]));
+        	System.out.println("Hash comparisons: " + hash.getObjComps(tempMagicList[a]));
         	
+        	globalComps = hash.getObjComps(tempMagicList[a]);
+        	
+        	localComps = globalComps + 1; 
+        	
+        	avgHashComps += localComps;
+        	System.out.println("total comps: " + avgHashComps);
+        	System.out.println();
         }
-        */
         
-		// retrieve from hash table
-		
-		// int avgHashComparisonsLS = 0;
-		
-		// get values from hash table
+        System.out.println("Overall Average Comparisons for Hash Table: " + avgHashComps / tempMagicList.length);
+
 
 	
 	} // main
@@ -313,32 +300,6 @@ public static int binarySearch(String[] arr, String key)
     return comps;
 }
 
-private static final int HASH_TABLE_SIZE = 250;
-
-public static int makeHashCode(String key) {
-	 
-	key = key.toUpperCase();
-    int length = key.length();
-    int letterTotal = 0;
-
-    // Iterate over all letters in the string, totalling their ASCII values.
-    
-    for (int i = 0; i < length; i++) 
-    {	
-       char thisLetter = key.charAt(i);
-       int thisValue = (int)thisLetter;
-       letterTotal = letterTotal + thisValue;
-       
-    } // for loop
-
-    // Scale letterTotal to fit in HASH_TABLE_SIZE.
-    int hashCode = (letterTotal * 1) % HASH_TABLE_SIZE;  // % is the "mod" operator
-    
-    // TODO: Experiment with letterTotal * 2, 3, 5, 50, etc.
-
-    return hashCode;
-    
- 	} // makeHashCode
 	
 } // MainGonzalezBonorino
 
