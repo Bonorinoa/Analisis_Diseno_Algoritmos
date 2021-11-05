@@ -187,7 +187,6 @@ public class MainGonzalezBonorino {
 		
 		for (int k = 0; k < tempMagicList.length; k++)
 		{
-			// System.out.println("Search string: " + tempMagicList[k] + ", found at index: " + binarySearch(myMagicList, 0, tempMagicList.length - 1, tempMagicList[k]));
 			
 			System.out.println("Comparisons made with binary search to find element "+ tempMagicList[k] + ": " + binarySearch(myMagicList, tempMagicList[k]));
 			
@@ -213,17 +212,20 @@ public class MainGonzalezBonorino {
         System.out.println("*************************************************");
         System.out.println(" ");
 		
-        
+        // Instantiate HashTableGonzalezBonorino object
         
         HashTableGonzalezBonorino hash = new HashTableGonzalezBonorino();
        
-     
+        // Populate it with all the elements in magic list 
         
         for (int h = 0; h < myMagicList.length; h++)
         {
+        	
         	hash.put(myMagicList[h], myMagicList[h]);
-        }
+        	
+        } // for loop
         
+        // Search for each of the 42 randomly selected items and print the total number of comparisons
         for (int a = 0; a < tempMagicList.length; a++)
         {
         	int localComps = 0;
@@ -239,7 +241,8 @@ public class MainGonzalezBonorino {
         	avgHashComps += localComps;
         	System.out.println("total comps: " + avgHashComps);
         	System.out.println();
-        }
+        	
+        } // for loop
         
         System.out.println("Overall Average Comparisons for Hash Table: " + avgHashComps / tempMagicList.length);
 
@@ -248,57 +251,66 @@ public class MainGonzalezBonorino {
 	} // main
 	
 
-public static int linearSearch(String[] arr, String key){ 
-	
-	int idx = 0;
-	
-	for(int i=0;i<arr.length;i++)
+	public static int linearSearch(String[] arr, String key){ 
+		
+		int idx = 0;
+		
+		for(int i=0;i<arr.length;i++)
+		{
+			
+			linearSearchComparisons++;
+	        if(arr[i].compareToIgnoreCase(key) == 0)
+	        {    
+	        	
+	            return i;    
+	            
+	        } // if  
+	        
+	    } // for loop
+		
+	    return linearSearchComparisons;
+	    
+	} // linearSearch
+
+
+	public static int binarySearch(String[] arr, String key)
 	{
-		linearSearchComparisons++;
-        if(arr[i].compareToIgnoreCase(key) == 0)
-        {    
-            return i;    
-        }    
-    }    
-    return linearSearchComparisons;
-    
-} // linearSearch
-
-
-public static int binarySearch(String[] arr, String key)
-{
-    int start = 0;
-    int mid = 0;
-    int stop = arr.length - 1;
-    int pos = 0;
-    int idx = -1;;
-    int comps = 0;
-    
-    while (start <= stop && idx == -1)
-    {
-    	binarySearchComparisons++;
-    	
-    	comps++;
-    	
-    	mid = start + (stop - start) / 2;
-    	
-    	pos = key.compareToIgnoreCase(arr[mid]);
-    	
-    	if (pos == 0)
-    		idx = mid;
-    	
-    	if (pos > 0)
-    		start = mid + 1;
-    	
-    	else
-    		
-    		stop = mid - 1;
-    	
-    } // while
-	
-	
-    return comps;
-}
+	    int start = 0;
+	    int mid = 0;
+	    int stop = arr.length - 1;
+	    int pos = 0;
+	    int idx = -1;;
+	    int comps = 0;
+	    
+	    while (start <= stop && idx == -1)
+	    {
+	    	binarySearchComparisons++;
+	    	
+	    	comps++;
+	    	
+	    	mid = start + (stop - start) / 2;
+	    	
+	    	pos = key.compareToIgnoreCase(arr[mid]);
+	    	
+	    	// if items are equal update the index
+	    	if (pos == 0)
+	    		idx = mid;
+	    	
+	    	// if key is greater update starting point
+	    	if (pos > 0)
+	    		start = mid + 1;
+	    	
+	    	// if key is smaller update end point
+	    	else
+	    		
+	    		stop = mid - 1;
+	    	
+	    } // while
+		
+		
+	    return comps;
+	    
+	} // binarySearch
 
 	
 } // MainGonzalezBonorino

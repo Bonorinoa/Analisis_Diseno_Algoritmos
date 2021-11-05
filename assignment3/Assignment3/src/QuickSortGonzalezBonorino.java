@@ -1,8 +1,19 @@
-
+/**
+ * This is the class definition for Quick Sort
+ * @author Bonoc
+ *
+ */
 public class QuickSortGonzalezBonorino {
 	
+	/**
+	 * variable to keep track of comparisons
+	 */
 	public static int quickSortComparisons = 0;
 	
+	/**
+	 * Knuth Shuffle implementation to shuffle a given list
+	 * @param listToShuffle
+	 */
 	public static void knuthShuffle(String[] listToShuffle) {
 		
 		for (int i = 0; i < listToShuffle.length; i++) {
@@ -20,6 +31,13 @@ public class QuickSortGonzalezBonorino {
 		
 	} // Knuth shuffle
 
+	/**
+	 * Recursive implementation of Quick Sort
+	 * @param magicList list to sort
+	 * @param lowIndex 
+	 * @param highIndex
+	 * @return number of comparisons 
+	 */
 	public int quickSort(String[] magicList, int lowIndex, int highIndex) {
 			
 			knuthShuffle(magicList);
@@ -35,7 +53,13 @@ public class QuickSortGonzalezBonorino {
 			return quickSortComparisons;
 		} // Quick Sort
 	
-	
+	/**
+	 * Method to partition the list 
+	 * @param magicList
+	 * @param lowIndex
+	 * @param highIndex
+	 * @return new index for partition
+	 */
 	public static int partition(String[] magicList, int lowIndex, int highIndex) {
 		
 		
@@ -67,4 +91,4 @@ public class QuickSortGonzalezBonorino {
 		
 	} // partition
 	
-}
+} // QuickSortGonzalezBonorino
