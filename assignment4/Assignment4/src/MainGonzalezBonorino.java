@@ -19,15 +19,10 @@ import java.io.*;
  * I certify that this assignment is entirely my own work. <br>
  */
 public class MainGonzalezBonorino {
-
-	
-	static Scanner keyboard = new Scanner(System.in);
-	
-	private static final int MAGIC_LENGTH = 666;
-	private static final int GRAPH_LENGTH = 366;
 	
 	private static String MAGIC_NAME = "magicitems.txt";
 	private static String GRAPH_NAME = "graphs1.txt";
+	private static String BST_NAME = "magicitems-find-in-bst.txt";
 	
 	public static void main(String[] args) {
 		
@@ -35,9 +30,12 @@ public class MainGonzalezBonorino {
 
 		ArrayList<String> myMagicList = new ArrayList<String>();
 		ArrayList<String> myGraphList = new ArrayList<String>();
+		ArrayList<String> myBSTList = new ArrayList<String>();
+		
 		
 		String tempStringG = null;
 		String tempMagicString = null;
+		String tempBSTString = null;
 
 		
 		String ans = "\nSome suggestions: \n"
@@ -48,7 +46,7 @@ public class MainGonzalezBonorino {
 		try
 			{
 				
-				BufferedReader inputG = new BufferedReader(new FileReader("graphs1.txt"));
+				BufferedReader inputG = new BufferedReader(new FileReader(GRAPH_NAME));
 				
 				while ( (tempStringG = inputG.readLine()) != null )
 					{
@@ -56,13 +54,21 @@ public class MainGonzalezBonorino {
 						
 					} // while
 				
-				BufferedReader inputMagic = new BufferedReader(new FileReader("magicitems.txt"));
+				BufferedReader inputMagic = new BufferedReader(new FileReader(MAGIC_NAME));
 				
 				while( (tempMagicString = inputMagic.readLine()) != null) 
 					{
 						myMagicList.add(tempMagicString);
 						
-					} //while
+					} // while
+				
+				BufferedReader inputBST = new BufferedReader(new FileReader(BST_NAME));
+				
+				while ( (tempBSTString = inputBST.readLine()) != null )
+					{
+						myBSTList.add(tempBSTString);
+						
+					} // while
 				
 				// check files were properly read
 				
@@ -86,9 +92,20 @@ public class MainGonzalezBonorino {
 						System.out.println(myGraphList.get(h) + " ");
 					}
 				
+				System.out.println(" ");
+				System.out.println("***** BST lIST *****");
+				System.out.println(" ");
+				
+				
+				for (int h=0; h < myBSTList.size(); h++)
+					{
+						System.out.println(myBSTList.get(h) + " ");
+					}
+				
 				
 				inputMagic.close();
 				inputG.close();
+				inputBST.close();
 				
 			} // try
 		
@@ -438,6 +455,58 @@ public class MainGonzalezBonorino {
         System.out.println(" ");
         System.out.println("**** Breadth First Search ****");
         graph5.breadthFirstSearch(graph5.myVertices.get(0));
+        
+        
+        System.out.println(" ");
+        System.out.println("***** BINARY TREE *****");
+        System.out.println(" ");
+        
+        
+        BSTGonzalezBonorino magicTree = new BSTGonzalezBonorino();
+        
+        // Populate tree
+        for (int h=0; h < myMagicList.size(); h++)
+			{
+        		
+        		System.out.println(" ");
+        		System.out.println("Path for element: " + myMagicList.get(h) );
+				magicTree.insert(myMagicList.get(h));
+				System.out.println(" ");
+				
+			} // for loop
+        
+        
+        System.out.println(" ");
+        System.out.println("***** BINARY TREE IN-ORDER *****");
+        System.out.println(" ");
+        
+        magicTree.inOrder();
+        
+        // Read file with strings to search
+        
+        System.out.println(" ");
+        System.out.println("***** SEARCHING *****");
+        System.out.println(" ");
+        
+        float BSTaverageComps = 0;
+        
+        for (int j = 0; j < myBSTList.size(); j++)
+	        {
+	        	System.out.println(" ");
+	    		System.out.println("Path to find element: " + myBSTList.get(j) );
+	        	magicTree.search( magicTree.myRoot, myBSTList.get(j) );
+	        	
+	        	System.out.println( "|| Number of comparisons: " + magicTree.getComps() );
+	        	
+	        	BSTaverageComps += magicTree.getComps();
+	        	
+	        	magicTree.resetCount();
+	        	
+	        } // for loop
+        
+        System.out.println(" ");
+        System.out.println("Average comparisons: " + ( BSTaverageComps / myBSTList.size() ) );
+        
         
 	} // main
 
