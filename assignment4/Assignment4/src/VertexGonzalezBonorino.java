@@ -6,18 +6,33 @@ public class VertexGonzalezBonorino {
 	
 	private ArrayList<VertexGonzalezBonorino> myNeighbours;
 	
+	private VertexGonzalezBonorino myNext;
+	
 	private boolean processed;
 	
 	// constructor
 	
-	public VertexGonzalezBonorino()
+	public VertexGonzalezBonorino(int newId)
 		{
 			
-			myId = 1;
+			myId = newId;
+			myNext = null;
 			processed = false;
 			myNeighbours = new ArrayList<>();
 			
 		} // VertexGonzalezBonorino
+	
+	public VertexGonzalezBonorino getNext()
+		{
+			return myNext;
+			
+		} // getNext
+	
+	public void setNext(VertexGonzalezBonorino newNext)
+		{
+			myNext = newNext;
+			
+		} // setNext
 	
 	public int getId()
 		{
@@ -55,5 +70,18 @@ public class VertexGonzalezBonorino {
 			processed = true;
 			
 		} // process
+	
+	public void unprocess()
+		{
+			processed = false;
+			
+		} // unprocess
+	
+
+    public void addEdge(VertexGonzalezBonorino newNeighbour)
+	    {
+	        myNeighbours.add(newNeighbour);
+	        
+	    } // addEdge
 	
 } // VertexGonzalezBonorino

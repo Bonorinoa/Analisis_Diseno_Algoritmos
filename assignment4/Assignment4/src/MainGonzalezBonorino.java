@@ -31,14 +31,14 @@ public class MainGonzalezBonorino {
 	
 	public static void main(String[] args) {
 		
-		File theMagicFile = null;
-		File theGraphFile = null;
-
-		String [] myMagicList = new String[MAGIC_LENGTH];
-		String [] myGraphList = new String[GRAPH_LENGTH];
 		
-		String tempString = null;
-		int numItems = 0;
+
+		ArrayList<String> myMagicList = new ArrayList<String>();
+		ArrayList<String> myGraphList = new ArrayList<String>();
+		
+		String tempStringG = null;
+		String tempMagicString = null;
+
 		
 		String ans = "\nSome suggestions: \n"
 				+ "\n* Check that the name of the file was typed correctly"
@@ -48,63 +48,46 @@ public class MainGonzalezBonorino {
 		try
 			{
 				
-				theGraphFile = new File(GRAPH_NAME);
+				BufferedReader inputG = new BufferedReader(new FileReader("graphs1.txt"));
 				
-				Scanner inputG = new Scanner(theGraphFile);
-				
-				while (inputG.hasNextLine())
+				while ( (tempStringG = inputG.readLine()) != null )
 					{
-						
-						tempString = inputG.nextLine();
-						
-						//System.out.println("String: " + tempString);
-						
-						if (tempString.charAt(0) != '-')
-							{
-								
-								myGraphList[numItems] = tempString;
-								
-								numItems++;
-								
-							} // if string is not a comment
+						myGraphList.add(tempStringG);
 						
 					} // while
 				
-				numItems = 0;
+				BufferedReader inputMagic = new BufferedReader(new FileReader("magicitems.txt"));
 				
-				theMagicFile = new File(MAGIC_NAME);
+				while( (tempMagicString = inputMagic.readLine()) != null) 
+					{
+						myMagicList.add(tempMagicString);
+						
+					} //while
 				
-				Scanner input = new Scanner(theMagicFile);
-				
-				while(input.hasNextLine()) {
-					
-					tempString = input.nextLine();
-					myMagicList[numItems] = tempString;
-					
-					numItems++;
-					
-				} //while
+				// check files were properly read
 				
 				System.out.println("***** MAGIC lIST *****");
 				System.out.println(" ");
 				
-				for (int j = 0; j < myMagicList.length; j++)
-				{
-					System.out.println(myMagicList[j]);
-					
-				}
+
+				for (int h=0; h < myMagicList.size(); h++)
+					{
+						System.out.println(myMagicList.get(h) + " ");
+					}	
+			
 				
 				System.out.println(" ");
 				System.out.println("***** GRAPH lIST *****");
 				System.out.println(" ");
 				
-				// loop to check the strings are loaded correctly
-				for (int i=0; i < myGraphList.length; i++)
-				{
-					System.out.println(myGraphList[i]);
-				}
 				
-				input.close();
+				for (int h=0; h < myGraphList.size(); h++)
+					{
+						System.out.println(myGraphList.get(h) + " ");
+					}
+				
+				
+				inputMagic.close();
 				inputG.close();
 				
 			} // try
@@ -147,49 +130,315 @@ public class MainGonzalezBonorino {
 				
 			} // catch no such element
 		
-		ArrayList<GraphGonzalezBonorino> listOfGraphs = new ArrayList<>();
-		
-		
 		// I have the commands from myGraphList, now use them to create graphs
 		
-		for (int j = 0; j < myGraphList.length; j++)
-			{
-				
-			if (myGraphList[j].contains("new graph"))
-				{
-					
-					GraphGonzalezBonorino graph = new GraphGonzalezBonorino();
-				
-					listOfGraphs.add(graph);
-					
-				} // if new graph
-			
-			else if (myGraphList[j].contains("add vertex"))
-				{
-					VertexGonzalezBonorino vertex = new VertexGonzalezBonorino();
-					
-					if (myGraphList[j].length() == 11)
-						{
-							int vertexId = myGraphList[j].charAt(11);
-							listOfGraphs.get(j).addVertex(vertex, vertexId);
-							
-						} // if id is one digit
-						
-						
-					} // if new vertex
-				
-				
-			} // for loop
+		/*
+		ArrayList<List<String>> commands = new ArrayList<List<String>>();	
+        
+		ArrayList<String> tempCommands = new ArrayList<>();
+
+        int i = 0;
+        
+        while ( i < myGraphList.size() ) 
+        {
+        	
+        	if (myGraphList.get(i) != "")
+        		tempCommands.add(myGraphList.get(i));
+        		
+        	i++;
+        	
+        } // while
+
+        //System.out.println(commands1);
+        System.out.println(tempCommands);
+
+		*/
+        System.out.println(" ");
+		System.out.println("**** GRAPH 1 ****");
+		System.out.println(" ");
 		
-		System.out.println("TEST");
+		ArrayList<String> commands1 = new ArrayList<>();
+
+        // take lines from file up until first blank line
+        for(int i = 0; i < myGraphList.indexOf(""); i++){
+        	commands1.add(myGraphList.get(i));
+        }
+
+        // create first graph
+        
+        GraphGonzalezBonorino graph1 = new GraphGonzalezBonorino();
+        graph1.populateGraph(commands1);
+        
+        System.out.println(" ");
+        System.out.println("**** Matrix form ****");
+        //graph1.printGraph(graph1);
+        graph1.printMatrix(graph1);
+       
+        System.out.println(" ");
+        System.out.println("**** Adjancency List ****");
+        graph1.printAdjacencyList(graph1);
+    
+        System.out.println(" ");
+        System.out.println("**** Depth First Search ****");
+        graph1.depthFirstSearch(graph1.myVertices.get(0));
+        
+        // vertices have been process with DFS so we need to set them all to false again
+        
+        for(int i = 0; i < graph1.myVertices.size(); i++)
+        {
+            graph1.myVertices.get(i).unprocess();
+            
+        } // for loop
+        
+        
+        System.out.println(" ");
+        System.out.println("**** Breadth First Search ****");
+        graph1.breadthFirstSearch(graph1.myVertices.get(0));
+        
+        
+		// create second graph
+        System.out.println(" ");
+		System.out.println("**** GRAPH 2 ****");
+		System.out.println(" ");
+        
+        int start = 0;
+        int end = 0;
+        int breaks = 0;
+        
+        //iterate through file
+        for(int j = 0; j < myGraphList.size(); j++)
+	        {
+	
+	            //if line is blank, increment breaks
+	            if(myGraphList.get(j).equals(""))
+		            {
+		                breaks++;
+		                
+		            } // if
+	            
+	            //if breaks is 1, set starting pos to 1 after blank line and increment breaks once more to avoid
+	            //meeting this if condition again
+	            if(breaks == 1)
+		            {
+		                breaks++;
+		                start = j + 1;
+		                
+		            } // if 1 break
+	            
+	            // if breaks is 3, set end to that line
+	            if(breaks == 3)
+		            {
+		                end = j;
+		                break;
+		                
+		            } // if 3 breaks
+	            
+	        } // for loop
+        
+        //create new ArrayList from start to end
+        ArrayList<String> commands2 = new ArrayList<String> (myGraphList.subList(start, end));
 		
-		for (int h = 0; h < listOfGraphs.get(0).getNumVertices(); h++)
-		{
-			System.out.println(listOfGraphs.get(0).myVertices.toString());
-			
-		}	
+        GraphGonzalezBonorino graph2 = new GraphGonzalezBonorino();
+        graph2.populateGraph(commands2);
+        
+        System.out.println(" ");
+        System.out.println("**** Matrix form ****");
+        graph2.printMatrix(graph2);
+       
+        System.out.println(" ");
+        System.out.println("**** Adjancency List ****");
+        graph2.printAdjacencyList(graph2);
+        
+        System.out.println(" ");
+        System.out.println("**** Depth First Search ****");
+        graph2.depthFirstSearch(graph2.myVertices.get(0));
+        
+        // vertices have been process with DFS so we need to set them all to false again
+        
+        for(int i = 0; i < graph2.myVertices.size(); i++)
+        {
+            graph2.myVertices.get(i).unprocess();
+            
+        } // for loop
+        
+        System.out.println(" ");
+        System.out.println("**** Breadth First Search ****");
+        graph2.breadthFirstSearch(graph2.myVertices.get(0));
 		
-		
+        // third graph
+        System.out.println(" ");
+		System.out.println("**** GRAPH 3 ****");
+		System.out.println(" ");
+        
+        
+        start = 0;
+        end = 0;
+        breaks = 0;
+        //same as prev, but break conditions increased by one to get the sublist of next graph
+        for(int j = 0; j < myGraphList.size(); j++)
+        {
+
+            if(myGraphList.get(j).equals(""))
+            {
+                breaks++;
+            }
+            if(breaks == 2)
+            {
+                breaks++;
+                start = j + 1;
+            }
+            if(breaks == 4)
+            {
+                end = j;
+                break;
+            }
+        }
+        
+        ArrayList<String> commands3 = new ArrayList<String> (myGraphList.subList(start, end));
+        
+        GraphGonzalezBonorino graph3 = new GraphGonzalezBonorino();
+        graph3.populateGraph(commands3);
+        
+        System.out.println(" ");
+        System.out.println("**** Matrix form ****");
+        //graph1.printGraph(graph1);
+        graph3.printMatrix(graph3);
+       
+        System.out.println(" ");
+        System.out.println("**** Adjancency List ****");
+        graph3.printAdjacencyList(graph3);
+        
+        System.out.println(" ");
+        System.out.println("**** Depth First Search ****");
+        graph3.depthFirstSearch(graph3.myVertices.get(0));
+        
+        // vertices have been process with DFS so we need to set them all to false again
+        
+        for(int i = 0; i < graph3.myVertices.size(); i++)
+        {
+            graph3.myVertices.get(i).unprocess();
+            
+        } // for loop
+        
+        System.out.println(" ");
+        System.out.println("**** Breadth First Search ****");
+        graph3.breadthFirstSearch(graph3.myVertices.get(0));
+        
+        
+        // fourth graph
+        System.out.println(" ");
+		System.out.println("**** GRAPH 4 ****");
+		System.out.println(" ");
+        
+        start = 0;
+        end = 0;
+        breaks = 0;
+        //same as prev, but break conditions increased by one to get the sublist of next graph
+        for(int j = 0; j < myGraphList.size(); j++)
+        {
+
+            if(myGraphList.get(j).equals(""))
+            {
+                breaks++;
+            }
+            if(breaks == 3)
+            {
+                breaks++;
+                start = j + 1;
+            }
+            if(breaks == 5)
+            {
+                end = j;
+                break;
+            }
+        }
+        
+        ArrayList<String> commands4 = new ArrayList<String> (myGraphList.subList(start, end));
+        
+        GraphGonzalezBonorino graph4 = new GraphGonzalezBonorino();
+        graph4.populateGraph(commands4);
+        
+        System.out.println(" ");
+        System.out.println("**** Matrix form ****");
+        //graph1.printGraph(graph1);
+        graph4.printMatrix(graph4);
+       
+        System.out.println(" ");
+        System.out.println("**** Adjancency List ****");
+        graph4.printAdjacencyList(graph4);
+        
+        System.out.println(" ");
+        System.out.println("**** Depth First Search ****");
+        graph4.depthFirstSearch(graph4.myVertices.get(0));
+        
+        // vertices have been process with DFS so we need to set them all to false again
+        
+        for(int i = 0; i < graph4.myVertices.size(); i++)
+        {
+            graph4.myVertices.get(i).unprocess();
+            
+        } // for loop
+        
+        System.out.println(" ");
+        System.out.println("**** Breadth First Search ****");
+        graph4.breadthFirstSearch(graph4.myVertices.get(0));
+        
+        // fifth graph
+        System.out.println(" ");
+		System.out.println("**** GRAPH 5 ****");
+		System.out.println(" ");
+        
+        start = 0;
+        end = myGraphList.size();
+        breaks = 0;
+        //get next graph
+        for(int j = 0; j < myGraphList.size(); j++)
+        {
+
+            if(myGraphList.get(j).equals(""))
+            {
+                breaks++;
+            }
+            
+            if(breaks == 4)
+            {
+                breaks++;
+                start = j + 1;
+            }
+
+        }
+        
+        
+        ArrayList<String> commands5 = new ArrayList<String> (myGraphList.subList(start, end));
+        
+        GraphGonzalezBonorino graph5 = new GraphGonzalezBonorino();
+        graph5.populateGraph(commands5);
+        
+        System.out.println(" ");
+        System.out.println("**** Matrix form ****");
+        //graph1.printGraph(graph1);
+        graph5.printMatrix(graph5);
+       
+        System.out.println(" ");
+        System.out.println("**** Adjancency List ****");
+        graph5.printAdjacencyList(graph5);
+        
+        System.out.println(" ");
+        System.out.println("**** Depth First Search ****");
+        graph5.depthFirstSearch(graph5.myVertices.get(0));
+        
+        // vertices have been process with DFS so we need to set them all to false again
+        
+        for(int i = 0; i < graph5.myVertices.size(); i++)
+        {
+            graph5.myVertices.get(i).unprocess();
+            
+        } // for loop
+
+        System.out.println(" ");
+        System.out.println("**** Breadth First Search ****");
+        graph5.breadthFirstSearch(graph5.myVertices.get(0));
+        
 	} // main
 
 } // MainGonzalezBonorino

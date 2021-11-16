@@ -1,3 +1,5 @@
+package testing;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -62,7 +64,7 @@ public class Graph {
             graph1.nodes.get(i).processed = false;
         }
         System.out.println("Breadth First Search: ");
-        graph1.breadthFirstSearch(graph1.nodes.get(0));
+        //graph1.breadthFirstSearch(graph1.nodes.get(0));
 
 
 
@@ -100,7 +102,7 @@ public class Graph {
         graph2.printAdjacencyList(graph2);
         System.out.println("***********");
         System.out.println("Depth First Search: ");
-        graph2.depthFirstSearch(graph2.nodes.get(0));
+        //graph2.depthFirstSearch(graph2.nodes.get(0));
 
 
         start = 0;
@@ -130,7 +132,7 @@ public class Graph {
         //graph3.printGraph(graph3);
         graph3.printMatrix(graph3);
         graph3.printAdjacencyList(graph3);
-        graph3.depthFirstSearch(graph3.nodes.get(0));
+        //graph3.depthFirstSearch(graph3.nodes.get(0));
 
 
         start = 0;
@@ -160,7 +162,7 @@ public class Graph {
         //graph4.printGraph(graph4);
         graph4.printMatrix(graph4);
         graph4.printAdjacencyList(graph4);
-        graph4.depthFirstSearch(graph4.nodes.get(0));
+        //graph4.depthFirstSearch(graph4.nodes.get(0));
 
 
 
@@ -185,10 +187,10 @@ public class Graph {
         Graph graph5 = new Graph();
         graph5.populateGraph(list5);
         System.out.println("*******");
-        //graph5.printGraph(graph5);
+        graph5.printGraph(graph5);
         graph5.printMatrix(graph5);
         graph5.printAdjacencyList(graph5);
-        graph5.depthFirstSearch(graph5.nodes.get(0));
+        //graph5.depthFirstSearch(graph5.nodes.get(0));
 
 
 
@@ -363,5 +365,6 @@ public class Graph {
     }
     */
 }
+
 
 
