@@ -190,7 +190,8 @@ public class BSTGonzalezBonorino
 	      if (node == null) 
 		      {
 		        return;
-		      }
+		        
+		      } // if
 	      
 	      inOrder(node.myLeft);
 	      System.out.println(node.myData);
