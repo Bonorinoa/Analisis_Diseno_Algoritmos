@@ -1,14 +1,40 @@
-
+/**
+ * 
+ * @author Augusto Gonzalez Bonorino
+ * 
+ * This is the class definition for Binary Tree
+ *
+ */
 public class BSTGonzalezBonorino 
 {
-	
+	/**
+	 * 
+	 * @author Augusto Gonzalez Bonorino
+	 * 
+	 * This is the class definition for a tree's node
+	 *
+	 */
 	public class treeNode
 		{
-		
+			/**
+			 * Instance variable to hold our data
+			 */
 			public String myData;
+			
+			/**
+			 * Instance variable to point to node on the left
+			 */
 			public treeNode myLeft;
+			
+			/**
+			 * Instance variable to point to node on the right
+			 */
 			public treeNode myRight;
 			
+			/**
+			 * Default constructor
+			 * @param newData
+			 */
 			public treeNode(String newData)
 				{
 					myData = newData;
@@ -29,33 +55,50 @@ public class BSTGonzalezBonorino
 	 */
 	private static float BSTcomparisons;
 	
-	
+	/**
+	 * Constructor to initialize root of the tree
+	 */
 	public BSTGonzalezBonorino()
 		{
 			myRoot = null;
 			
 		} // Tree constructor
 	
-	
+	/**
+	 * Method to get number of comparisons
+	 * @return BSTcomparisons
+	 */
 	public float getComps()
 		{
 			return BSTcomparisons;
 			
 		} // getComps
 	
+	/**
+	 * Method to reset the comparisons count
+	 */
 	public void resetCount()
 		{
 			BSTcomparisons = 0;
 			
 		} // resetCount
 	
-
+	/**
+	 * Recursive method to insert new data
+	 * @param newData
+	 */
     public void insert(String newData) 
 	    {
 	        myRoot = insert(myRoot, newData);
 	        
 	    } // insert
-
+    
+    /**
+     * Method to find correct index for given data and insert it to the tree
+     * @param root
+     * @param newData
+     * @return treeNode
+     */
     public treeNode insert(treeNode root, String newData) 
 	    {
 	        // Base Case: root is null or not
@@ -87,7 +130,12 @@ public class BSTGonzalezBonorino
 	        return root;
 	    }// insert
     
-    
+    /**
+     * Binary Search method to find a given target 
+     * @param root
+     * @param target
+     * @return target if found
+     */
     public String search(treeNode root, String target)
     {
     	String ans = " ";
@@ -132,6 +180,10 @@ public class BSTGonzalezBonorino
 	      
 	    } // inOrder Recursive
     
+    /**
+     * Method to print out elements in the tree in-order
+     * @param node
+     */
     private void inOrder(treeNode node) 
 	    {
 	    	

@@ -1,5 +1,11 @@
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Augusto Gonzalez Bonorino <br><br>
+ *
+ * This is the class definition for GraphGonzalezBonorino, which implements an undirected graph
+ *
+ */
 public class GraphGonzalezBonorino {
 	
 	private int numVertices;
@@ -30,121 +36,170 @@ public class GraphGonzalezBonorino {
 			
 		} // addVertex
 
-	
+	/**
+	 * Get number of vertices in the graph
+	 * @return numVertices
+	 */
 	public int getNumVertices()
 		{
 			return numVertices;
 			
 		} // getNumVertices
 	
+	/**
+	 * Method to populate graph given the list of Strings of commands from text file
+	 * @param list of Strings 
+	 */
 	public void populateGraph(ArrayList<String> list)
-	{
+		{
+	
+	        //iterate through arrayList
+	        for(int i = 0; i < list.size(); i++)
+		        {
+		            //if line is empty or a comment, print it out
+		            if(list.get(i).equals("") || list.get(i).substring(0, 2).equals("--"))
+			            {
+			                System.out.println(list.get(i));
+			                
+			            } // if
+		
+		            // add vertex
+		            else if(list.get(i).contains("vertex"))
+			            {
+			                // get vertex's id
+			                int id = Integer.parseInt(list.get(i).substring(list.get(i).lastIndexOf(" ") + 1));
+			                
+			                addVertex(id);
+			
+			            } // else if
+		
+		            // add edge
+		            else if(list.get(i).contains("edge"))
+			            {
+		            		// get id of first vertex
+			                int id1 = Integer.parseInt(list.get(i).substring(list.get(i).lastIndexOf("e") + 2,
+			                        list.get(i).indexOf("-") - 1));
+			                
+			                // get id of second vertex
+			                int id2 = Integer.parseInt(list.get(i).substring(list.get(i).indexOf("-") + 2));
+			
+			                
+			                if(myVertices.get(0).getId() == 0)
+				                {
+				                	myVertices.get(id1).addNeighbour(myVertices.get(id2));
+				                	myVertices.get(id2).addNeighbour(myVertices.get(id1));
+				                	
+				                } // if
+			
+			                //if the first node is not a 0 we need to subtract one to comply with list indexation
+			                else 
+				                {
+				                	myVertices.get(id1 - 1).addNeighbour(myVertices.get(id2 - 1));
+				                	myVertices.get(id2 - 1).addNeighbour(myVertices.get(id1 - 1));
+				                	
+				                } // else
+			
+			            } // else if
+		            
+		        } // for loop
+	        
+	    } // populateGraph
 
-        //iterate through arrayList
-        for(int i = 0; i < list.size(); i++)
-        {
-            //if line is empty or a comment, print it out
-            if(list.get(i).equals("") || list.get(i).substring(0, 2).equals("--"))
-            {
-                System.out.println(list.get(i));
-            }
-
-            //if line wants us to add vertex...
-            else if(list.get(i).contains("vertex"))
-            {
-                //take the last string, convert to an int and add a vertex with this id
-                int id = Integer.parseInt(list.get(i).substring(list.get(i).lastIndexOf(" ") + 1));
-                
-                addVertex(id);
-
-            }
-
-            //if line wants us to add an edge...
-            else if(list.get(i).contains("edge"))
-            {
-                //first id is first string after last instance of the letter 'e', until before the '-', convert to an int
-                int id1 = Integer.parseInt(list.get(i).substring(list.get(i).lastIndexOf("e") + 2,
-                        list.get(i).indexOf("-") - 1));
-                //second id is from instance of '-' till end of string, convert to int
-                int id2 = Integer.parseInt(list.get(i).substring(list.get(i).indexOf("-") + 2));
-
-                //if the first node id is a 0, we take the id's as they are
-                if(myVertices.get(0).getId() == 0)
-                {
-                	myVertices.get(id1).addEdge(myVertices.get(id2));
-                	myVertices.get(id2).addEdge(myVertices.get(id1));
-                }
-
-                //if the first node is not a 0 (it will be 1), we need to subtract one
-                // as ArrayLists start at 0 but our id is 1
-                else 
-                {
-                	myVertices.get(id1 - 1).addEdge(myVertices.get(id2 - 1));
-                	myVertices.get(id2 - 1).addEdge(myVertices.get(id1 - 1));
-                }
-
-            }
-            
-        } // for loop
-        
-    } // populateGraph
-
-    //test function to print attributes of graph
+    /**
+     * Test method to print out the properties of the graph
+     * @param GraphGonzalezBonorino object
+     */
     public void printGraph(GraphGonzalezBonorino graph)
-    {
-
-        for(int i = 0; i < graph.myVertices.size(); i++){
-            System.out.println(graph.myVertices.get(i).getId());
-            System.out.println(graph.myVertices.get(i).isProcessed());
-            for(int j = 0; j < graph.myVertices.get(i).getNeighbours().size(); j++){
-                System.out.print(graph.myVertices.get(i).getNeighbours().get(j).getId() + ", " );
-            }
-            System.out.println();
-            System.out.println("********");
-        }
-    }
-
-    public void printMatrix(GraphGonzalezBonorino graph){
-        int[][] matrix = new int[graph.myVertices.size()][graph.myVertices.size()];
-
-        //iterate through rows of matrix
-        for(int i = 0; i <graph.myVertices.size(); i++){
-            //iterate through columns of matrix
-            for(int j = 0; j < graph.myVertices.size(); j++){
-                //iterate through neighbors list
-                for(int k = 0; k < graph.myVertices.get(i).getNeighbours().size(); k++){
-                    //if first node starts at 0...
-                    if(graph.myVertices.get(0).getId() == 0){
-                        //we check neighbor id directly to j and if they are equal, set matrix[i][j] to 1
-                        if(graph.myVertices.get(i).getNeighbours().get(k).getId() == j){
-                            matrix[i][j] = 1;
-                            break;
-                        }
-                    }
-                    //else (first node will be 1)
-                    else{
-                        //we check neighbor id to j + 1 because matrices start at 0 while our graph starts at 1
-                        if(graph.myVertices.get(i).getNeighbours().get(k).getId() == j + 1){
-                            matrix[i][j] = 1;
-                            break;
-                        }
-                    }
-
-                    matrix[i][j] = 0;
-                }
-
-            }
-        }
-        //print out matrix
-        for(int i = 0; i < graph.myVertices.size(); i++){
-            for(int j = 0; j < graph.myVertices.size(); j++){
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
+	    {
+	
+	        for(int i = 0; i < graph.myVertices.size(); i++)
+		        {
+		            System.out.println(graph.myVertices.get(i).getId());
+		            System.out.println(graph.myVertices.get(i).isProcessed());
+		            
+		            for(int j = 0; j < graph.myVertices.get(i).getNeighbours().size(); j++)
+			            {
+			                System.out.print(graph.myVertices.get(i).getNeighbours().get(j).getId() + ", " );
+			                
+			            } // inner for loop
+		            
+		            System.out.println();
+		            System.out.println("********");
+		            
+		        } // outer for loop
+	        
+	    } // printGraph
     
+    /**
+     * Method to print the Matrix representation of the graph
+     * @param GraphGonzalezBonorino object
+     */
+    public void printMatrix(GraphGonzalezBonorino graph)
+	    {
+	        int[][] matrix = new int[graph.myVertices.size()][graph.myVertices.size()];
+	
+	        //iterate through rows of matrix
+	        for(int i = 0; i <graph.myVertices.size(); i++)
+	        {
+	            //iterate through columns of matrix
+	            for(int j = 0; j < graph.myVertices.size(); j++)
+		            {
+		                //iterate through neighbors list
+		                for(int k = 0; k < graph.myVertices.get(i).getNeighbours().size(); k++)
+			                {
+			                    //if first node starts at 0...
+			                    if(graph.myVertices.get(0).getId() == 0)
+				                    {
+				                        //we check neighbor id directly to j and if they are equal, set matrix[i][j] to 1
+				                        if(graph.myVertices.get(i).getNeighbours().get(k).getId() == j)
+					                        {
+					                            matrix[i][j] = 1;
+					                            break;
+					                            
+					                        } // if
+				                        
+				                    } // if
+			                    
+			                   
+			                    else
+				                    {
+				                        //we check neighbor id to j + 1 because matrices start at 0 while our graph starts at 1
+				                        if(graph.myVertices.get(i).getNeighbours().get(k).getId() == j + 1)
+					                        {
+					                            matrix[i][j] = 1;
+					                            break;
+					                            
+					                        } // if
+				                        
+				                    } // else
+			
+			                    matrix[i][j] = 0;
+			                    
+			                } // third loop
+		
+		            } // second loop
+	            
+	        } // first loop
+	        
+	        //print out matrix
+	        for(int i = 0; i < graph.myVertices.size(); i++)
+		        {
+		            for(int j = 0; j < graph.myVertices.size(); j++)
+			            {
+			                System.out.print(matrix[i][j] + " ");
+			                
+			            } // inner for loop
+		            
+		            System.out.println();
+		            
+		        } // outer for loop
+	        
+	    } // printMatrix
+
+    /**
+     * Method to print the Adjacency list representation of the graph
+     * @param GraphGonzalezBonorino object
+     */
     public void printAdjacencyList(GraphGonzalezBonorino graph)
 	    {
 	        //if first node starts at 1...
@@ -188,7 +243,10 @@ public class GraphGonzalezBonorino {
 	        
 	    } // printAdjacencyList
     
-    
+    /**
+     * Depth First Search traversal of a linked list implmentation of the graph
+     * @param vertex
+     */
     public void depthFirstSearch(VertexGonzalezBonorino vertex)
 	    {
 	    	if (vertex.isProcessed() == false)
@@ -207,7 +265,10 @@ public class GraphGonzalezBonorino {
 	    	
 	    } // depthFirstSearch
     
-    
+    /**
+     * Breadth First Search traversal of a linked list implmentation of the graph with a Queue
+     * @param vertex
+     */
     public void breadthFirstSearch(VertexGonzalezBonorino vertex)
 	    {
 	    	QueueGonzalezBonorino queue = new QueueGonzalezBonorino();
