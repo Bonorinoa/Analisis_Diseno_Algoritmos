@@ -150,26 +150,37 @@ public class MainGonzalezBonorino {
 		// I have the commands from myGraphList, now use them to create graphs
 		
 		/*
-		ArrayList<List<String>> commands = new ArrayList<List<String>>();	
+		//ArrayList<List<String>> commands = new ArrayList<List<String>>();	
         
-		ArrayList<String> tempCommands = new ArrayList<>();
+		//ArrayList<String> tempCommands = new ArrayList<>();
 
         int i = 0;
         
         while ( i < myGraphList.size() ) 
         {
         	
-        	if (myGraphList.get(i) != "")
-        		tempCommands.add(myGraphList.get(i));
+        	if ( myGraphList.get(i).contains("new graph") )
+        	{
+        		GraphGonzalezBonorino graph = new GraphGonzalezBonorino();
+        		ArrayList<String> commands = new ArrayList<>();
         		
+        		for (int h = i + 1; myGraphList.get(h) != ""; h++)
+        		{
+        			commands.add(myGraphList.get(h));
+        			
+        		}
+        		
+        		System.out.println(commands.toArray());
+        	}
+        	
+        	
+        	
         	i++;
         	
         } // while
-
-        //System.out.println(commands1);
-        System.out.println(tempCommands);
-
 		*/
+
+		
         System.out.println(" ");
 		System.out.println("**** GRAPH 1 ****");
 		System.out.println(" ");
