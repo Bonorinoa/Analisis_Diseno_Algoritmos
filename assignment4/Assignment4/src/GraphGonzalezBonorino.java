@@ -105,30 +105,6 @@ public class GraphGonzalezBonorino {
 	        
 	    } // populateGraph
 
-    /**
-     * Test method to print out the properties of the graph
-     * @param GraphGonzalezBonorino object
-     */
-    public void printGraph(GraphGonzalezBonorino graph)
-	    {
-	
-	        for(int i = 0; i < graph.myVertices.size(); i++)
-		        {
-		            System.out.println(graph.myVertices.get(i).getId());
-		            System.out.println(graph.myVertices.get(i).isProcessed());
-		            
-		            for(int j = 0; j < graph.myVertices.get(i).getNeighbours().size(); j++)
-			            {
-			                System.out.print(graph.myVertices.get(i).getNeighbours().get(j).getId() + ", " );
-			                
-			            } // inner for loop
-		            
-		            System.out.println();
-		            System.out.println("********");
-		            
-		        } // outer for loop
-	        
-	    } // printGraph
     
     /**
      * Method to print the Matrix representation of the graph
@@ -244,7 +220,7 @@ public class GraphGonzalezBonorino {
 	    } // printAdjacencyList
     
     /**
-     * Depth First Search traversal of a linked list implmentation of the graph
+     * Depth First Search traversal of a linked list implementation of the graph
      * @param vertex
      */
     public void depthFirstSearch(VertexGonzalezBonorino vertex)
