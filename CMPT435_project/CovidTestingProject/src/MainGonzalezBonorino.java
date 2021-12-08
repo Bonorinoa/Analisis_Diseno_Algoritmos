@@ -1,159 +1,92 @@
 import java.util.*;
 
 public class MainGonzalezBonorino {
+	
+	// fixed infection rate 
+	final static double infectionRate = 0.02;
+	
+	// number of experiments to conduct
+	final static int numExperiments = 4;
 
 	public static void main(String[] args) 
 	{
-
 		
+		// array to hold different population sizes to test
+		ArrayList<Integer> populationsSize = new ArrayList<Integer>();
+		
+		// size of first population
+		int size = 1000;
+		
+		for (int i = 0; i < numExperiments; i++)
+			{
+				populationsSize.add(size);
+				
+				size = size * 10;
+				
+			} // for
+
 		System.out.println("SEMESTER PROJECT - COVID POOL TESTING");
-		
-		System.out.println("************* TEST 1 ***************");
-		
-        System.out.println("Population size 1000, 2% infection rate");
         
-        // Population of 1000
-        ArrayList<Integer> population = infectPopulation(1000);
-        
-        ArrayList<ArrayList<Integer>> grouped_pop = groupBy8(population);
+	    for ( int j = 0; j < numExperiments; j++)
+	    {
 
-        // number of cases
-        
-        double case1 = 0.0;
-        double case2 = 0.0;
-        double case3 = 0.0;
-        
+	    	int popSize = populationsSize.get(j);
+	    	
+	        ArrayList<Integer> population = infectPopulation(popSize);
+	        
+	        ArrayList<ArrayList<Integer>> grouped_pop = groupBy8(population);
+	        
+			System.out.println(" ");
+			
+			System.out.println("************* TEST " + (j+1) + " ***************");
+			
+	        System.out.println("Population size " + popSize + " with " + infectionRate + " infection rate");
+	
+			System.out.println(" ");
 
+	        
+	        // number of cases
+	        
+	        double case1 = 0.0;
+	        double case2 = 0.0;
+	        double case3 = 0.0;
+	        
+	        for(int i = 0; i < grouped_pop.size(); i++)
+	        {
+	            String cases = checkInfection(grouped_pop.get(i));
+	            if(cases.equals("Case 1"))
+	            {
+	                case1++;
+	                
+	            } // case 1
+	            
+	            else if(cases.equals("Case 2"))
+	            {
+	                case2++;
+	                
+	            } // case 2 
+	            
+	            else if(cases.equals("Case 3"))
+	            {
+	                case3++;
+	                
+	            } // case 3
+	
+	        } // inner for
+	        
+		    //print cases and percentages
+	        System.out.println("Case (1): 125 x " + case1 / (population.size() / 8) + " = " + 125 * Math.round( (case1 / (population.size() / 8) * 100.0)) / 100.0 + " instances requiring " + (int) (case1 * 1) + " tests");
+	        System.out.println("Case (2): 125 x "  + case2 / (population.size() / 8) + " = " + 125 *  Math.round( (case2 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (case2 * 7) + " tests");
+	        System.out.println("Case (3): 125 x " + case3 / (population.size() / 8) + " = " + 125 *  Math.round( (case3 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (Math.ceil(case3) * 11) + " tests");
+	        //System.out.println("Total number of tests required: " + )
 
-        for(int i = 0; i < grouped_pop.size(); i++)
-        {
-            String cases = checkInfection(grouped_pop.get(i));
-            if(cases.equals("Case 1"))
-            {
-                case1++;
-                
-            } // case 1
-            
-            else if(cases.equals("Case 2"))
-            {
-                case2++;
-                
-            } // case 2 
-            
-            else if(cases.equals("Case 3"))
-            {
-                case3++;
-                
-            } // case 3
-
-        } // for
-
-        //print cases and percentages
-        System.out.println("Case (1): 125 x " + case1 / (population.size() / 8) + " = " + 125 * (double) (case1 / (population.size() / 8)) + " instances requiring " + case1 * 1 + " tests");
-        System.out.println("Case (2): 125 x "  + case2 / (population.size() / 8) + " = " + 125 * (double) (case2 / (population.size() / 8)) + " instances requiring " + case2 * 7 + " tests");
-        System.out.println("Case (3): 125 x " + case3 / (population.size() / 8) + " = " + 125 * (double) (case3 / (population.size() / 8)) + " instances requiring " + Math.ceil(case3) * 11 + " tests");
-        //System.out.println("Total number of tests required: " + )
-
-        /*
-		System.out.println("************* TEST 2 ***************");
-
-        System.out.println("Population size 10000, 2% infection rate");
-
-        // Population of 10000
-        ArrayList<Integer> population2 = infectPopulation(10000);
-        ArrayList<ArrayList<Integer>> grouped_pop2 = groupBy8(population2);
-
-        case1 = 0.0;
-        case2 = 0.0;
-        case3 = 0.0;
-
-        for(int i = 0; i < grouped_pop2.size(); i++){
-            String cases = checkInfection(grouped_pop2.get(i));
-            if(cases.equals("Case 1")){
-                case1++;
-            }
-            else if(cases.equals("Case 2")){
-                case2++;
-            }
-            else if(cases.equals("Case 3")){
-                case3++;
-            }
-
-        }
-
-        System.out.println("Case 1, 1 test: " + case1 + " instances --> " + case1 / (population2.size() / 8));
-        System.out.println("Case 2, 7 tests: " + case2 + " instances --> " + case2 / (population2.size() / 8));
-        System.out.println("Case 3, 11 tests: " + case3 + " instances --> " + case3 / (population2.size() / 8));
-
-		System.out.println("************* TEST 3 ***************");
-
-        System.out.println("Population size 100000, 2% infection rate");
-
-        // Population of 100000
-        ArrayList<Integer> population3 = infectPopulation(100000);
-        ArrayList<ArrayList<Integer>> grouped_pop3 = groupBy8(population3);
-
-        case1 = 0.0;
-        case2 = 0.0;
-        case3 = 0.0;
-
-        for(int i = 0; i < grouped_pop3.size(); i++){
-            String cases = checkInfection(grouped_pop3.get(i));
-            if(cases.equals("Case 1")){
-                case1++;
-            }
-            else if(cases.equals("Case 2")){
-                case2++;
-            }
-            else if(cases.equals("Case 3")){
-                case3++;
-            }
-
-        }
-
-        System.out.println("Case 1, 1 test: " + case1 + " instances --> " + case1 / (population3.size() / 8));
-        System.out.println("Case 2, 7 tests: " + case2 + " instances --> " + case2 / (population3.size() / 8));
-        System.out.println("Case 3, 11 tests: " + case3 + " instances --> " + case3 / (population3.size() / 8));
-
-		System.out.println("************* TEST 4 ***************");
-
-        System.out.println("Population size 1000000, 2% infection rate");
-
-        // Population of 100000
-        ArrayList<Integer> population4 = infectPopulation(1000000);
-        ArrayList<ArrayList<Integer>> grouped_pop4 = groupBy8(population4);
-
-        case1 = 0.0;
-        case2 = 0.0;
-        case3 = 0.0;
-
-        for(int i = 0; i < grouped_pop4.size(); i++)
-        {
-            String cases = checkInfection(grouped_pop4.get(i));
-            if(cases.equals("Case 1"))
-            {
-                case1++;
-            }
-            else if(cases.equals("Case 2")){
-                case2++;
-            }
-            else if(cases.equals("Case 3")){
-                case3++;
-            }
-
-        }
-
-        System.out.println("Case 1, 1 test: " + case1 + " instances --> " + case1 / (population4.size() / 8));
-        System.out.println("Case 2, 7 tests: " + case2 + " instances --> " + case2 / (population4.size() / 8));
-        System.out.println("Case 3, 11 tests: " + case3 + " instances --> " + case3 / (population4.size() / 8));
-        */
+	        
+	    } // outer for
 
 	} // main
 	
 	public static ArrayList<Integer> infectPopulation(int popSize)
 		{
-			// fixed infection rate 
-			final double infection_rate = 0.02;
 			
 			// to infect random people
 			Random rand = new Random();
@@ -169,7 +102,7 @@ public class MainGonzalezBonorino {
 	        
 	        int idx = 0;
 			
-			for (int j = 0; j < patients.size() * infection_rate; j++)
+			for (int j = 0; j < patients.size() * infectionRate; j++)
 				{
 				    idx = rand.nextInt(patients.size());
 				    
@@ -183,7 +116,7 @@ public class MainGonzalezBonorino {
 				    
 				} // for
 			
-			int count = 0;
+			/*int count = 0;
 			
 	        for (int i = 0; i < patients.size(); i++)
 		        {
@@ -193,7 +126,7 @@ public class MainGonzalezBonorino {
 		        } // for
 		        
 	        System.out.println("Patients infected: " + count); // Should always be 2% of population since it is 2% infection rate
-	        
+	        */
 	        return patients;
 	        
 	    } // infectPopulation
