@@ -133,7 +133,8 @@ public class mainGonzalezBonorino {
 			
 			int smallPos = i;
 			
-			for (int j = i + 1; j <= len - 1; j++) {
+			for (int j = i + 1; j <= len - 1; j++) 
+			{
 				
 				if (magicList[j].compareToIgnoreCase(magicList[smallPos]) < 0 ) //compare strings
 				{	

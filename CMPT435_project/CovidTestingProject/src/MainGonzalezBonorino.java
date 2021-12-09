@@ -75,10 +75,13 @@ public class MainGonzalezBonorino {
 	        } // inner for
 	        
 		    //print cases and percentages
-	        System.out.println("Case (1): 125 x " + case1 / (population.size() / 8) + " = " + 125 * Math.round( (case1 / (population.size() / 8) * 100.0)) / 100.0 + " instances requiring " + (int) (case1 * 1) + " tests");
-	        System.out.println("Case (2): 125 x "  + case2 / (population.size() / 8) + " = " + 125 *  Math.round( (case2 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (case2 * 7) + " tests");
-	        System.out.println("Case (3): 125 x " + case3 / (population.size() / 8) + " = " + 125 *  Math.round( (case3 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (Math.ceil(case3) * 11) + " tests");
-	        //System.out.println("Total number of tests required: " + )
+	        System.out.println("Case (1): " + grouped_pop.size() + " x " + case1 / (population.size() / 8) + " = " + grouped_pop.size() * Math.round( (case1 / (population.size() / 8) * 100.0)) / 100.0 + " instances requiring " + (int) (case1 * 1) + " tests");
+	        System.out.println("Case (2): " + grouped_pop.size() + " x " + case2 / (population.size() / 8) + " = " + grouped_pop.size() *  Math.round( (case2 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (case2 * 7) + " tests");
+	        System.out.println("Case (3): " + grouped_pop.size() + " x " + case3 / (population.size() / 8) + " = " + grouped_pop.size() *  Math.round( (case3 / (population.size() / 8) * 100.0)) / 100.0  + " instances requiring " + (int) (Math.ceil(case3) * 11) + " tests");
+	        
+	        int totalNumTests = (int) ( (case1 * 1) + (case2 * 7) + (Math.ceil(case3) * 11) );
+	        
+	        System.out.println("Total number of tests required: " + totalNumTests);
 
 	        
 	    } // outer for
@@ -91,6 +94,9 @@ public class MainGonzalezBonorino {
 			// to infect random people
 			Random rand = new Random();
 			
+			// set to store unique ids
+			Set<Integer> idxs = new LinkedHashSet<Integer>();
+			
 			// list to populate the full population with 1s and 0s
 	        ArrayList<Integer> patients = new ArrayList<Integer>();
 	        
@@ -102,21 +108,26 @@ public class MainGonzalezBonorino {
 	        
 	        int idx = 0;
 			
-			for (int j = 0; j < patients.size() * infectionRate; j++)
+			while (idxs.size() < patients.size() * infectionRate)
 				{
 				    idx = rand.nextInt(patients.size());
 				    
-				    /*
-				     * Test code to check indices are random
-				    System.out.println("Random index " + j + " : " + idx);
-				    */
-				    
-				    // set infected patient to 1
-				    patients.set(idx, 1);
+				    idxs.add(idx);
 				    
 				} // for
+
 			
-			/*int count = 0;
+			for (int id : idxs)
+				{
+				    
+				    // set infected patient to 1
+				    patients.set(id, 1);
+					
+				} // for each unique random id in idxs
+			
+			/*
+			 * Test code to count number of people infected
+			int count = 0;
 			
 	        for (int i = 0; i < patients.size(); i++)
 		        {
@@ -166,6 +177,10 @@ public class MainGonzalezBonorino {
 		            
 		        } // for every patient
 	        
+	        /*
+	         * Test code to check number of groups of 8 generated for the given population size
+	        System.out.println("Number of groups of 8 in grouped population: " + grouped_pop.size()); // should be equal to (popSize / 8)
+	        */
 	        return grouped_pop;
 	        
 	    } //groupBy8

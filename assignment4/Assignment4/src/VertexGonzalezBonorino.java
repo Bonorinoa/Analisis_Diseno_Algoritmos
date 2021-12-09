@@ -3,7 +3,7 @@ import java.util.ArrayList;
  * 
  * @author Augusto Gonzalez Bonorino <br><br>
  * 
- * This is the class definition for a grpah's Vertex.
+ * This is the class definition for a graph's Vertex.
  *
  */
 public class VertexGonzalezBonorino {
