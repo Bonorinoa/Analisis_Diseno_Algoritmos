@@ -182,13 +182,12 @@ public class MainFractionalKnapsack
 
                 if(spices.get(k).myQuant != prev_quantities.get(k))
 	                {
-	                    //print the difference in myQuant
-	                    System.out.print(prev_quantities.get(k) - spices.get(k).myQuant);
+                	
+                		int numScoops = prev_quantities.get(k) - spices.get(k).myQuant;
+
+	                    System.out.print(numScoops + " scoop(s) of " + spices.get(k).myColor + ", ");
 	                    
-	                    //print myColor
-	                    System.out.print(" scoop(s) of " + spices.get(k).myColor + ", ");
-	                    
-	                } // if qty changed
+	                } // if qty changed 
                 
             } // for each spice
 
