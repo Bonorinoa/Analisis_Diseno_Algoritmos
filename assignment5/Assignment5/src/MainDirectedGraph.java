@@ -179,33 +179,6 @@ public class MainDirectedGraph
         } // outer for loop
 
     } // Bellman_Ford
-
-    public boolean Bellman_FordCheck(MainDirectedGraph graph)
-    {
-		boolean ans = true;
-		
-        for(int i = 0; i < graph.nodes.size(); i++)
-	        {
-	        	VertexGonzalezBonorino from_Vertex = graph.nodes.get(i);
-	        	
-	            for(int j = 0; j < graph.nodes.get(i).neighbors.size(); j++)
-		            {
-		            	VertexGonzalezBonorino to_Vertex = graph.nodes.get(from_Vertex.neighbors.get(j).to_VertexID - 1);
-		            	
-		                if(to_Vertex.short_path > from_Vertex.short_path + from_Vertex.neighbors.get(j).weight)
-			                {
-			                    ans = false;
-			                    
-			                } // if
-		                
-		            } // for
-	            
-	        } // for
-        
-        return ans;
-        
-    } // Bellman_FordCheck
-
 	
     public static void main(String[] args) throws FileNotFoundException, IOException  
 	{
