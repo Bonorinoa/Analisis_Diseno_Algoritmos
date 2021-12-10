@@ -43,6 +43,7 @@ public class MainFractionalKnapsack
 	        
 	        inputKnapsack.close();
 	        
+	        
 		} // try
 	        
 
@@ -160,7 +161,7 @@ public class MainFractionalKnapsack
 	            {
 	                while(spices.get(j).myQuant > 0 & holding < capacity)
 		                {
-		                    //add the unit price of the spice to the knapsack worth
+		                    // add the unit price of the spice to the knapsack worth
 		                    worth = worth + spices.get(j).myUnitPrice;
 		                    
 		                    // update qty
