@@ -100,7 +100,7 @@ public class MainDirectedGraph
         
     } // printGraph
 
-    public void SSSP(MainDirectedGraph graph)
+    public void Bellman_Ford(MainDirectedGraph graph)
     {
         // Initialize first node's short_path
         graph.nodes.get(0).short_path = 0;
@@ -132,11 +132,11 @@ public class MainDirectedGraph
             
         } // first for loop
 
-        //printing out path from first node to all nodes
+        // print paths
         for(int i = 1; i < graph.nodes.size(); i++)
         {
             System.out.print("1 --> " + graph.nodes.get(i).id);
-            System.out.print(" cost is " + graph.nodes.get(i).short_path + "; ");
+            System.out.print(" cost is " + (int) graph.nodes.get(i).short_path + "; ");
             System.out.print("path is ");
 
             VertexGonzalezBonorino cur_Vertex = graph.nodes.get(i);
@@ -178,9 +178,9 @@ public class MainDirectedGraph
             
         } // outer for loop
 
-    } // SSSP
+    } // Bellman_Ford
 
-    public boolean SSSPCheck(MainDirectedGraph graph)
+    public boolean Bellman_FordCheck(MainDirectedGraph graph)
     {
 		boolean ans = true;
 		
@@ -204,7 +204,7 @@ public class MainDirectedGraph
         
         return ans;
         
-    } // SSSPCheck
+    } // Bellman_FordCheck
 
 	
     public static void main(String[] args) throws FileNotFoundException, IOException  
@@ -302,7 +302,7 @@ public class MainDirectedGraph
         MainDirectedGraph graph1 = new MainDirectedGraph();
         
         graph1.populateGraph(commands1);
-        graph1.SSSP(graph1);
+        graph1.Bellman_Ford(graph1);
 
         int start = 0;
         int end = 0;
@@ -340,10 +340,10 @@ public class MainDirectedGraph
         //create new ArrayList from start to end
         ArrayList<String> commands2 = new ArrayList<String> (myGraphList.subList(start, end));
 
-        //create second graph, run SSSP
+        //create second graph, run Bellman_Ford
         MainDirectedGraph graph2 = new MainDirectedGraph();
         graph2.populateGraph(commands2);
-        graph2.SSSP(graph2);
+        graph2.Bellman_Ford(graph2);
 
         start = 0;
         end = 0;
@@ -379,10 +379,10 @@ public class MainDirectedGraph
         //create new ArrayList from start to end
         ArrayList<String> commands3 = new ArrayList<String> (myGraphList.subList(start, end));
 
-        //create third graph, SSSP
+        //create third graph, Bellman_Ford
         MainDirectedGraph graph3 = new MainDirectedGraph();
         graph3.populateGraph(commands3);
-        graph3.SSSP(graph3);
+        graph3.Bellman_Ford(graph3);
 
         start = 0;
         end = myGraphList.size();
@@ -412,7 +412,7 @@ public class MainDirectedGraph
 
         MainDirectedGraph graph4 = new MainDirectedGraph();
         graph4.populateGraph(commands4);
-        graph4.SSSP(graph4);
+        graph4.Bellman_Ford(graph4);
 
     } // main
 }
