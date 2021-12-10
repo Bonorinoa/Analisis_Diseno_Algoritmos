@@ -6,128 +6,13 @@ public class MainFractionalKnapsack
 	
 	private static String SPICE_NAME = "spice.txt";
 
-	public static void main(String[] args) throws FileNotFoundException, IOException 
+	public static void main(String[] args)
 		{
 			
-			ArrayList<SpiceGonzalezBonorino> spices =  createSpices();
-	        greedyKnapsack(spices);
-			
-		} // main
-	
-	public static ArrayList<SpiceGonzalezBonorino> createSpices()
-		{
-	
-			ArrayList<String> mySpiceList = new ArrayList<String>();
-			
-			String tempSpiceString = null;
-			
-			String ans = "\nSome suggestions: \n"
-					+ "\n* Check that the name of the file was typed correctly"
-					+ "\n* Make sure that you are not missing any information in your item description in the file"
-					+ "\n* Make sure you are not entering more or less items than specified";
-			
-			
-			try 
-			{
-				BufferedReader inputSpice = new BufferedReader(new FileReader(SPICE_NAME));
-	
-		        while ((tempSpiceString = inputSpice.readLine()) != null) 
-		        {
-		        	mySpiceList.add(tempSpiceString);
-		        	
-		        } // while
-		        
-		        inputSpice.close();
-		        
-			} // try
-		        
-	
-			catch(IndexOutOfBoundsException ex)
-		    {
-				System.out.println("Oops, something went wrong!");
-				System.out.println("It seems that the program has reached an index out of bounds.");
-				
-		    } // catch index out of bound
-			
-			catch (NullPointerException ex2)
-			{
-				System.out.println("The program encountered a null value.");
-				System.out.println(ans);
-				
-			} // catch null pointer
-		      
-			catch (IllegalArgumentException ex3)
-			{
-				System.out.println("An illegal argument has been given to the program.");
-				System.out.println("\nSome suggestions: \n"
-				+ "\n* Check that the name of the file was typed correctly"
-				+ "\n* Make sure that you are not missing any information in your item description in the file");
-				
-			} // catch illegal argument
-			
-			catch (IOException ex4)
-			{
-				System.out.println("There seems to be an issue with the input given or with the file that you are trying to open.");
-				System.out.println(ans);
-				
-			} // catch IOException
-			
-			catch (NoSuchElementException ex5)
-			{
-				System.out.println("\nAn element was not found.");
-				System.out.println("Make sure you are not inputting less items than specified in the first line of the text file,\n"
-						+ "or that the name of the item inputted does not contain a whitespace. \nWe apologize for the inconvenience, we are constantly working to improve our systems.");
-				
-			} // catch no such element
-	  
-	
-	        // create ArrayList of spices
-	        ArrayList<SpiceGonzalezBonorino> spices = new ArrayList<>();
-
-	        for(int i = 0; i < mySpiceList.size(); i++)
-		        {
+		ArrayList<String> mySpiceCommands = new ArrayList<String>();
+		String tempSpiceString = null;
 		
-		            if(mySpiceList.get(i).equals("") || mySpiceList.get(i).substring(0, 2).equals("--"))
-			            {
-			                continue;
-			            } // if blank line or comment
-		
-		            else if(mySpiceList.get(i).contains("spice"))
-			            {
-			                String line = mySpiceList.get(i);
-			
-			                // get myColor
-			                String myColor = line.substring(line.indexOf("=") + 2, line.indexOf(";"));
-			                SpiceGonzalezBonorino spice = new SpiceGonzalezBonorino(myColor);
-			
-			                // get total price
-			                double myTotalPrice = Double.parseDouble( line.substring(line.lastIndexOf(" ", 39) + 1, line.indexOf(';', 20)) );
-			                spice.myTotalPrice = myTotalPrice;
-			
-			                // get myQuant
-			                int qty = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.lastIndexOf(';')));
-			                spice.myQuant = qty;
-			
-			                // compute price per unit
-			                double myUnitPrice = myTotalPrice / qty;
-			                spice.myUnitPrice = myUnitPrice;
-			
-			                //add new spice object to list of spices
-			                spices.add(spice);
-			
-			            } // else if we must add spice
-		            
-		        } // for 
-	
-	        return spices;
-	        
-	    } // createSpices
-
-    public static void greedyKnapsack(ArrayList<SpiceGonzalezBonorino> spices)
-    {
-    	
 		ArrayList<String> myKnapsackCommands = new ArrayList<String>();
-    	
     	String tempKnapsackString = null;
 		
 		String ans = "\nSome suggestions: \n"
@@ -135,9 +20,20 @@ public class MainFractionalKnapsack
 				+ "\n* Make sure that you are not missing any information in your item description in the file"
 				+ "\n* Make sure you are not entering more or less items than specified";
 		
+		
 		try 
 		{
-			BufferedReader inputKnapsack = new BufferedReader(new FileReader(SPICE_NAME));
+			BufferedReader inputSpice = new BufferedReader(new FileReader(SPICE_NAME));
+
+	        while ((tempSpiceString = inputSpice.readLine()) != null) 
+	        {
+	        	mySpiceCommands.add(tempSpiceString);
+	        	
+	        } // while
+	        
+	        inputSpice.close();
+	        
+	        BufferedReader inputKnapsack = new BufferedReader(new FileReader(SPICE_NAME));
 
 	        while ((tempKnapsackString = inputKnapsack.readLine()) != null) 
 	        {
@@ -148,7 +44,7 @@ public class MainFractionalKnapsack
 	        inputKnapsack.close();
 	        
 		} // try
-		
+	        
 
 		catch(IndexOutOfBoundsException ex)
 	    {
@@ -187,9 +83,55 @@ public class MainFractionalKnapsack
 					+ "or that the name of the item inputted does not contain a whitespace. \nWe apologize for the inconvenience, we are constantly working to improve our systems.");
 			
 		} // catch no such element
+  
 
+        // create ArrayList of spices
+        ArrayList<SpiceGonzalezBonorino> spices = new ArrayList<>();
+
+        for(int i = 0; i < mySpiceCommands.size(); i++)
+	        {
+	
+	            if(mySpiceCommands.get(i).equals("") || mySpiceCommands.get(i).substring(0, 2).equals("--"))
+		            {
+		                continue;
+		            } // if blank line or comment
+	
+	            else if(mySpiceCommands.get(i).contains("spice"))
+		            {
+		                String line = mySpiceCommands.get(i);
+		
+		                // get myColor
+		                String myColor = line.substring(line.indexOf("=") + 2, line.indexOf(";"));
+		                SpiceGonzalezBonorino spice = new SpiceGonzalezBonorino(myColor);
+		
+		                // get total price
+		                double myTotalPrice = Double.parseDouble( line.substring(line.lastIndexOf(" ", 39) + 1, line.indexOf(';', 20)) );
+		                spice.myTotalPrice = myTotalPrice;
+		
+		                // get myQuant
+		                int qty = Integer.parseInt(line.substring(line.lastIndexOf(" ") + 1, line.lastIndexOf(';')));
+		                spice.myQuant = qty;
+		
+		                // compute price per unit
+		                double myUnitPrice = myTotalPrice / qty;
+		                spice.myUnitPrice = myUnitPrice;
+		
+		                //add new spice object to list of spices
+		                spices.add(spice);
+		
+		            } // else if we must add spice
+	            
+	        } // for 
+        
+	        greedyKnapsack(spices, myKnapsackCommands);
+			
+		} // main
+	
+    public static void greedyKnapsack(ArrayList<SpiceGonzalezBonorino> spices, ArrayList<String> knapsackCommands)
+    {
+    	
         // List with knapsacks commands
-        ArrayList<String> myKnapsacksList = new ArrayList<String>(myKnapsackCommands.subList(9, myKnapsackCommands.size()));
+        ArrayList<String> myKnapsacksList = new ArrayList<String>(knapsackCommands.subList(9, knapsackCommands.size()));
 
         //sort spices by myUnitPrice descending
         selectionSort(spices);
